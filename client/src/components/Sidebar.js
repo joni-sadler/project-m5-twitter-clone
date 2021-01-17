@@ -10,26 +10,26 @@ const Sidebar = () => {
   return (
     <Wrapper>
       <GlobalStyles />
-      <Logo />
+      <Logo width={"50px"} />
 
         <SidebarContainer>
-          <Home style={{marginRight: "20px"}}/>
-          <h3><NavigationLink to="/" style={{color: "black", textDecoration: "none"}}>Home</NavigationLink></h3>
+          <Home style={{marginRight: "30px"}}/>
+            <NavigationLink exact to="/">Home</NavigationLink>
         </SidebarContainer>
 
         <SidebarContainer>
-          <User style={{marginRight: "20px"}}/>
-          <h3><NavLink to="/:profileId" style={{color: "black", textDecoration: "none"}}>Profile</NavLink></h3>
+          <User style={{marginRight: "30px"}}/>
+            <NavigationLink to="/:profileId">Profile</NavigationLink>
         </SidebarContainer>
 
         <SidebarContainer>
-          <Bell  style={{marginRight: "20px"}}/>
-          <h3><NavLink to="/notifications" style={{color: "black", textDecoration: "none"}}>Notifications</NavLink></h3>
+          <Bell  style={{marginRight: "30px"}}/>
+            <NavigationLink to="/notifications">Notifications</NavigationLink>
         </SidebarContainer>
 
         <SidebarContainer>
-          <Bookmark style={{marginRight: "20px"}}/>
-          <h3><NavLink to="/bookmarks" style={{color: "black", textDecoration: "none"}}>Bookmarks</NavLink></h3>
+          <Bookmark style={{marginRight: "30px"}}/>
+            <NavigationLink to="/bookmarks">Bookmarks</NavigationLink>
         </SidebarContainer>
 
     </Wrapper>
@@ -42,7 +42,8 @@ const Wrapper = styled.div`
   justify-content: space-evenly;
   align-items: left;
   margin: 0% 5% 0% 10%;
-  height: 500px;
+  height: 300px;
+  width: 200px;
 `;
 
 const SidebarContainer = styled.div` 
@@ -50,12 +51,21 @@ const SidebarContainer = styled.div`
     flex-direction: row;
     justify-content: left;
     align-items: center;
-`
+    padding-left: 10px;
+    &:active {
+        background-color: rgba(148,0,211, 0.2);
+        color: ${COLORS.primary};
+        border-radius: 20px;
+    }
+`;
 
 const NavigationLink = styled(NavLink)` 
-  color: blue;
-
-  &.active {
+  font-size: 20px;
+  font-weight: 600;
+  color: black;
+  text-decoration: none;
+  padding: 10px 0px;
+  &:active {
     color: ${COLORS.primary};
   }
 `;
