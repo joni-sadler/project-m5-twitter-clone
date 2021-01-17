@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export const CurrentUserContext = React.createContext(null);
 
@@ -6,19 +6,17 @@ export const CurrentUserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [status, setStatus] = useState("unloading");
 
-  const fetchUserData = (ev) => {
-    ev.preventDefault();
-    fetch("/me/profile", {
+  useEffect(() => {
+    fetch('/api/me/profile', {
       method: "GET",
-      body: JSON.stringify({...currentUser}),
-      headers: {"Accept": "application/json", "Content-type": "application/json"},
     })
-    .then((res) => res.json())
-    .then((res) => {
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
       setCurrentUser(currentUser);
-      setStatus("idle");
+      setStatus('idle');
     })
-  };
+  });
 
   return (
     <CurrentUserContext.Provider value={{ currentUser, status }}>
