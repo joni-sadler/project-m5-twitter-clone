@@ -14,23 +14,21 @@ const SmallTweet = ({tweet}) => {
                 // tweetText={tweetsById.status}
                 // timestamp={tweetsById.timestamp}
 
-
   return (
     <Wrapper>
       <TweetContainer>
       <img src={tweet.author.avatarSrc} style={{borderRadius: "50%"}} height="60px" width="60px" />
         <TweetDiv>
           <TweetHeader>
+            {tweet.isRetweeted === true && <Retweeted>Is retweeted</Retweeted>}
             <DisplayName>{tweet.author.displayName}</DisplayName>
             <Handle>@{tweet.author.handle} •</Handle>
             <Timestamp>{tweet.timestamp}</Timestamp>
           </TweetHeader>
           <TweetContent>{tweet.status}</TweetContent>
+          {tweet.media.length > 0 && <img src={tweet.media[0].url} style={{borderRadius: "5px"}} height="300px" width="100%"  /> }
         </TweetDiv>
-      </TweetContainer>  
-
-      {tweet.media[1] > 0 && <img src={tweet.media[0]} /> }
-      
+      </TweetContainer>        
       <TweetActionWrapper>
           <TweetActions />
       </TweetActionWrapper>
@@ -43,7 +41,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   margin-top: 40px;
-  border: 1px solid black;
+  border-bottom: 1px solid lightgray;
   padding: 10px;
 `;
 
@@ -57,6 +55,7 @@ const TweetDiv = styled.div`
   display: flex;
   flex-direction: column;
   justify-items: flex-start;
+  padding-left: 10px;
 `;
 
 const TweetHeader = styled.div` 
@@ -64,10 +63,15 @@ const TweetHeader = styled.div`
   flex-direction: row;
 `;
 
+const Retweeted = styled.p` 
+  font-size: 14px;
+  color: gray;
+  padding: 4px 0px 0px 5px;
+`;
+
 const DisplayName = styled.p` 
   font-size: 16px;
   font-weight: 600;
-  padding-left: 10px;
 `;
 
 const Handle = styled.p` 
@@ -84,7 +88,6 @@ const Timestamp = styled.p`
 
 const TweetContent = styled.p` 
   font-size: 14px;
-  padding-left: 10px;
   margin-top: 0px;
 `;
 
@@ -94,6 +97,7 @@ const TweetContent = styled.p`
 
 const TweetActionWrapper = styled.div` 
   justify-content: space-evenly;
+  padding-top: 10px;
 `;
 
 
