@@ -26,7 +26,7 @@ const SmallTweet = ({tweet}) => {
             <Timestamp>{tweet.timestamp}</Timestamp>
           </TweetHeader>
           <TweetContent>{tweet.status}</TweetContent>
-          {tweet.media.length > 0 && <img src={tweet.media[0].url} style={{borderRadius: "5px"}} height="300px" width="100%"  /> }
+          {tweet.media.length > 0 && <img src={tweet.media[0].url} style={{borderRadius: "5px"}} height="auto" width="100%"  /> }
         </TweetDiv>
       </TweetContainer>        
       <TweetActionWrapper>
