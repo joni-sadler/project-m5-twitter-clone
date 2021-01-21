@@ -47,15 +47,11 @@ const HomeFeed = () => {
   }
 
   return (
-  <Wrapper>
-    
+  <Wrapper>    
     {tweets.tweetIds.map((tweetId) => {
-        const tweet = tweets.tweetsById[tweetId]
+      const tweet = tweets.tweetsById[tweetId]
         return (
-            <SmallTweet
- 
-                tweet={tweet}
-            />
+          <SmallTweet tweet={tweet} />
         )
     })}
   </Wrapper>
