@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { CurrentUserContext } from "./CurrentUserContext";
 import { COLORS } from "../constants";
+import { MapPin, Calendar } from "react-feather";
 import styled from "styled-components";
 
 const Profile = () => {
@@ -45,13 +46,24 @@ const Profile = () => {
         <Handle>@{currentUser.profile.handle}</Handle>
         <Bio>{currentUser.profile.bio}</Bio>
         <LocationDateContainer>
-          <Location>{currentUser.profile.location}</Location>
-          <JoinedDate>{currentUser.profile.joined}</JoinedDate>
+          <MapContainer>
+            <MapPin style={{color: "gray", height: "16px", paddingTop: "15px"}}/>
+            <Location>{currentUser.profile.location}</Location>
+          </MapContainer>
+          <CalendarContainer>
+            <Calendar style={{color: "gray", height: "16px", paddingTop: "15px"}}/>
+            <JoinedDate>{currentUser.profile.joined}</JoinedDate>
+          </CalendarContainer>
         </LocationDateContainer>
         <FollowContainer>
           <Follow>{currentUser.profile.numFollowing} Following</Follow>
           <Follow>{currentUser.profile.numFollowers} Followers</Follow>
         </FollowContainer>
+        <TweetsMediaLikesContainer>
+          <TweetsMediaLikes>Tweets</TweetsMediaLikes>
+          <TweetsMediaLikes>Media</TweetsMediaLikes>
+          <TweetsMediaLikes>Likes</TweetsMediaLikes>
+        </TweetsMediaLikesContainer>
       </InformationContainer>
     </Wrapper>
   )
@@ -59,7 +71,7 @@ const Profile = () => {
 
 const Wrapper = styled.div` 
   width: 650px;
-  height: 500px;
+  height: 525px;
   border: 1px solid lightgray;
   z-index: 0;
 `;
@@ -111,18 +123,27 @@ const Handle = styled.p`
 
 const Bio = styled.p` 
   font-size: 15px;
-  margin-top: 0px;
+  margin: 0px;
 `;
 
 const LocationDateContainer = styled.div` 
   display: flex;
   justify-content: space-between;
-  width: 300px;
+  width: 320px;
+`;
+
+const MapContainer = styled.div` 
+  display: flex;
+`;
+
+const CalendarContainer = styled.div` 
+  display: flex;
 `;
 
 const Location = styled.p` 
   font-size: 15px;
   color: gray;
+  padding-left: 5px;
 `;
 
 const JoinedDate = styled.p` 
@@ -134,12 +155,28 @@ const FollowContainer = styled.div`
   display: flex;
   justify-content: space-between;
   width: 200px;
+  padding-left: 5px;
 `;
 
 const Follow = styled.p` 
   font-size: 15px;
   color: gray;
   margin-top: 0px;
+`;
+
+const TweetsMediaLikesContainer = styled.div` 
+  display: flex;
+  justify-content: space-around;
+`;
+
+const TweetsMediaLikes = styled.p` 
+  margin: 25px 0px 10px 0px;
+  font-size: 15px;
+  font-weight: 700;
+  color: gray;
+  &:active {
+    color: ${COLORS.primary};
+  }
 `;
 
 export default Profile;
