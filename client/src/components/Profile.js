@@ -59,12 +59,18 @@ const Profile = () => {
           <Follow>{currentUser.profile.numFollowing} Following</Follow>
           <Follow>{currentUser.profile.numFollowers} Followers</Follow>
         </FollowContainer>
-        <TweetsMediaLikesContainer>
-          <TweetsMediaLikes>Tweets</TweetsMediaLikes>
-          <TweetsMediaLikes>Media</TweetsMediaLikes>
-          <TweetsMediaLikes>Likes</TweetsMediaLikes>
-        </TweetsMediaLikesContainer>
       </InformationContainer>
+      <TweetsMediaLikesContainer>
+          <TweetsMediaLikes>
+            <MenuItem>Tweets</MenuItem>
+          </TweetsMediaLikes>
+          <TweetsMediaLikes>
+            <MenuItem>Media</MenuItem>
+          </TweetsMediaLikes>
+          <TweetsMediaLikes>
+            <MenuItem>Likes</MenuItem>
+          </TweetsMediaLikes>
+        </TweetsMediaLikesContainer>
     </Wrapper>
   )
 };
@@ -169,10 +175,23 @@ const TweetsMediaLikesContainer = styled.div`
   justify-content: space-around;
 `;
 
-const TweetsMediaLikes = styled.p` 
-  margin: 25px 0px 10px 0px;
+const TweetsMediaLikes = styled.div` 
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  border-bottom: 2px solid gray;
+  &:active {
+    border-bottom: 2px solid ${COLORS.primary};
+  }
+`;
+
+const MenuItem = styled.p` 
+  align-items: center;
+  padding-bottom: 5px;
   font-size: 15px;
   font-weight: 700;
+  width: 200px;
   color: gray;
   &:active {
     color: ${COLORS.primary};
