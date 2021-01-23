@@ -1,29 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import SmallTweet from "./SmallTweet";
 import styled from "styled-components";
+import { TweetContext } from "./TweetContext";
 
 const HomeFeed = () => {
-  const [tweets, setTweets] = useState();
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (!tweets) {
-        fetch('/api/me/home-feed', {
-            method: "GET",
-          })
-          .then(res => res.json())
-          .then(data => {
-            setTweets(data)
-          })
-    }
-  }, []);
+  const { tweets, setTweets, loading, setLoading } = useContext(TweetContext);
 
-  useEffect(() => {
-    if (tweets) {
-        setLoading(false);
-    }
-  }, [tweets])
+//   useEffect(() => {
+//     if (!tweets) {
+//         fetch('/api/me/home-feed', {
+//             method: "GET",
+//           })
+//           .then(res => res.json())
+//           .then(data => {
+//             setTweets(data)
+//           })
+//     }
+//   }, []);
+
+//   useEffect(() => {
+//     if (tweets) {
+//         setLoading(false);
+//     }
+//   }, [tweets])
 
 //   let {handle} = useParams();
 
@@ -38,13 +39,13 @@ const HomeFeed = () => {
 //     })
 //   }, []);
 
-  console.log(tweets)
+//   console.log(tweets)
   
-  if (loading) {
-      return (
-          <div>Loading</div>
-      )
-  }
+//   if (loading) {
+//       return (
+//           <div>Loading</div>
+//       )
+//   }
 
   return (
   <Wrapper>    

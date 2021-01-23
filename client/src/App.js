@@ -8,10 +8,12 @@ import Profile from "./components/Profile";
 import styled from "styled-components";
 import Sidebar from "./components/Sidebar";
 import { CurrentUserContext, CurrentUserProvider } from "./components/CurrentUserContext";
+import { TweetProvider } from "./components/TweetContext";
 
 const App = () => {
   const {currentUser, status} = useContext(CurrentUserContext);
   return (
+    <TweetProvider> 
     <CurrentUserProvider> 
       {(status === "loading") ? "The page is loading" :
       <BrowserRouter>
@@ -31,10 +33,12 @@ const App = () => {
               <Bookmarks />
             </Route>
           
+            {/* view single tweet */}
             <Route exact path="/tweet/:tweetId">
               <TweetDetails />
             </Route>
           
+            {/* view user profile page */}
             <Route exact path="/:profileId">
               <Profile />
             </Route>
@@ -44,6 +48,7 @@ const App = () => {
       </BrowserRouter> 
     }
     </CurrentUserProvider>
+    </TweetProvider>
   )
 }
 
