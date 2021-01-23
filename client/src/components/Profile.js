@@ -4,6 +4,7 @@ import { CurrentUserContext } from "./CurrentUserContext";
 import { COLORS } from "../constants";
 import { MapPin, Calendar } from "react-feather";
 import styled from "styled-components";
+import HomeFeed from "./HomeFeed";
 
 const Profile = () => {
   const {currentUser, status} = useContext(CurrentUserContext);
@@ -21,6 +22,14 @@ const Profile = () => {
   // });
 
   console.log(currentUser);
+
+  // const showTweetFeed = () => {
+  //   return (
+  //     <div>
+  //       <SmallTweet />
+  //     </div>
+  //   )
+  // }
 
   return (
     <Wrapper>
@@ -71,13 +80,14 @@ const Profile = () => {
             <MenuItem>Likes</MenuItem>
           </TweetsMediaLikes>
         </TweetsMediaLikesContainer>
+          <HomeFeed />
     </Wrapper>
   )
 };
 
 const Wrapper = styled.div` 
-  width: 650px;
-  height: 525px;
+  width: 750px;
+  height: 100%;
   border: 1px solid lightgray;
   z-index: 0;
 `;

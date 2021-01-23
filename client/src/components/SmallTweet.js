@@ -3,17 +3,6 @@ import TweetActions from "./TweetActions";
 import styled from "styled-components";
 
 const SmallTweet = ({tweet}) => {
-  console.log(tweet);
-
-               // author={tweetsById.author}
-                // isLiked={tweetsById.isLiked}
-                // isRetweeted={tweetsById.isRetweeted}
-                // media={tweetsById.media}
-                // numLikes={tweetsById.numLikes}
-                // numRetweets={tweetsById.numRetweets}
-                // tweetText={tweetsById.status}
-                // timestamp={tweetsById.timestamp}
-
   return (
     <Wrapper>
       <TweetContainer>
@@ -26,7 +15,7 @@ const SmallTweet = ({tweet}) => {
             <Timestamp>{tweet.timestamp}</Timestamp>
           </TweetHeader>
           <TweetContent>{tweet.status}</TweetContent>
-          {tweet.media.length > 0 && <img src={tweet.media[0].url} style={{borderRadius: "5px"}} height="auto" width="100%"  /> }
+          {tweet.media.length > 0 && <img src={tweet.media[0].url} style={{borderRadius: "15px"}} height="auto" width="100%"  /> }
         </TweetDiv>
       </TweetContainer>        
       <TweetActionWrapper>

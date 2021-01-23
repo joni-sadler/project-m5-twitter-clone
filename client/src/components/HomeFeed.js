@@ -60,7 +60,7 @@ const HomeFeed = () => {
 };
 
 const Wrapper = styled.div` 
-  width: 700px;
+  width: 750px;
 `;
 
 export default HomeFeed;
