@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CurrentUserContext } from "./CurrentUserContext";
 import { COLORS } from "../constants";
@@ -7,42 +7,43 @@ import styled from "styled-components";
 import HomeFeed from "./HomeFeed";
 
 const Profile = () => {
-  const {currentUser, status} = useContext(CurrentUserContext);
+  const {currentUser, setCurrentUser, status, setStatus} = useContext(CurrentUserContext);
+  const [selectedUser, setSelectedUser] = useState();
+  const { profileId } = useParams();
 
-  // let {handle} = useParams();
+  console.log("profile id:", profileId);
 
-  // useEffect(() => {
-  //   fetch(`/api/${handle}/profile`, {
-  //     method: "GET",
-  //   })
-  //   .then(res => res.json())
-  //   .then(data => {
-  //     console.log(data)
-  //   })
-  // });
 
-  console.log(currentUser);
+  useEffect(() => {
+    fetch(`/api/${profileId}/profile`, {
+      method: "GET",
+    })
+    .then(res => res.json())
+    .then(data => {
+      setSelectedUser(data);
+      console.log(data);
+      setStatus('idle');
+    })
+  }, []);
 
-  // const showTweetFeed = () => {
-  //   return (
-  //     <div>
-  //       <SmallTweet />
-  //     </div>
-  //   )
-  // }
+  if (!selectedUser) {
+    return (
+      <p>Loading</p>
+    )
+  }
 
   return (
     <Wrapper>
-      <img src={currentUser.profile.bannerSrc} height="auto" width="100%" />
+      <img src={selectedUser.profile.bannerSrc} height="auto" width="100%" />
       <HeaderContainer>
-        <img src={currentUser.profile.avatarSrc} 
+        <img src={selectedUser.profile.avatarSrc} 
           style={{
             borderRadius: "50%",
             border: "3px solid white",
-            position: "absolute",
+            position: "fixed",
             zIndex: "1",    
-            top: "19%",
-            left: "36%",   
+            top: "22%",
+            left: "35%",   
             height: "140px",
             width: "140px",     
           }} />
@@ -51,22 +52,22 @@ const Profile = () => {
           </EditButton>
       </HeaderContainer>
       <InformationContainer>
-        <DisplayName>{currentUser.profile.displayName}</DisplayName>
-        <Handle>@{currentUser.profile.handle}</Handle>
-        <Bio>{currentUser.profile.bio}</Bio>
+        <DisplayName>{selectedUser.profile.displayName}</DisplayName>
+        <Handle>@{selectedUser.profile.handle}</Handle>
+        <Bio>{selectedUser.profile.bio}</Bio>
         <LocationDateContainer>
           <MapContainer>
             <MapPin style={{color: "gray", height: "16px", paddingTop: "15px"}}/>
-            <Location>{currentUser.profile.location}</Location>
+            <Location>{selectedUser.profile.location}</Location>
           </MapContainer>
           <CalendarContainer>
             <Calendar style={{color: "gray", height: "16px", paddingTop: "15px"}}/>
-            <JoinedDate>{currentUser.profile.joined}</JoinedDate>
+            <JoinedDate>{selectedUser.profile.joined}</JoinedDate>
           </CalendarContainer>
         </LocationDateContainer>
         <FollowContainer>
-          <Follow>{currentUser.profile.numFollowing} Following</Follow>
-          <Follow>{currentUser.profile.numFollowers} Followers</Follow>
+          <Follow>{selectedUser.profile.numFollowing} Following</Follow>
+          <Follow>{selectedUser.profile.numFollowers} Followers</Follow>
         </FollowContainer>
       </InformationContainer>
       <TweetsMediaLikesContainer>
