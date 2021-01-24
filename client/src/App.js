@@ -9,12 +9,13 @@ import styled from "styled-components";
 import Sidebar from "./components/Sidebar";
 import { CurrentUserContext, CurrentUserProvider } from "./components/CurrentUserContext";
 import { TweetProvider } from "./components/TweetContext";
+import Following from "./components/Following";
+
 
 const App = () => {
   const {currentUser, status} = useContext(CurrentUserContext);
   return (
     <TweetProvider> 
-    <CurrentUserProvider> 
       {(status === "loading") ? "The page is loading" :
       <BrowserRouter>
         <Wrapper>
@@ -37,17 +38,25 @@ const App = () => {
             <Route exact path="/tweet/:tweetId">
               <TweetDetails />
             </Route>
-          
+
+            <Route exact path="/:profileId/following">
+              <Following />
+            </Route>
+
             {/* view user profile page */}
             <Route exact path="/:profileId">
               <Profile />
+            </Route>
+
+            
+            <Route>
+              Missing route! Do you need to add a route in BrowserRouter in App.js?
             </Route>
 
           </Switch>
         </Wrapper>
       </BrowserRouter> 
     }
-    </CurrentUserProvider>
     </TweetProvider>
   )
 }
