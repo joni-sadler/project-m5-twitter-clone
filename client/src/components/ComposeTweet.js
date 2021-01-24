@@ -37,7 +37,9 @@ const ComposeTweet = () => {
         onChange={event => setCount(event.target.value.length)}></textarea>
       </TextInput>
       <FooterDiv>
-        <CharacterCounter>{remainingCharacters}</CharacterCounter>  
+        {remainingCharacters > 55 && <CharacterCounter style={{color: "grey"}}>{remainingCharacters}</CharacterCounter>}
+        {remainingCharacters < 55 && remainingCharacters > 0 && <CharacterCounter style={{color: "gold"}}>{remainingCharacters}</CharacterCounter>}
+        {remainingCharacters < 0 && <CharacterCounter style={{color: "red"}}>{remainingCharacters}</CharacterCounter>}
         <MeowButton>
           <MeowText onClick={recordTweet}>Meow</MeowText>
         </MeowButton>
@@ -67,7 +69,6 @@ const FooterDiv = styled.div`
 `;
 
 const CharacterCounter = styled.div` 
-  color: grey;
   padding-bottom: 10px;
 `;
 
