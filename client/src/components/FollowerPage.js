@@ -2,29 +2,36 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { COLORS } from "../constants";
-import { Link } from "react-router-dom";
-import FollowingUser from "./FollowingUser";
+import FollowerUser from "./FollowerUser";
 
-const FollowingPage = () => {
-  const [following, setFollowing] = useState();
+const FollowerPage = () => {
+  const [followers, setFollowers] = useState();
 
   const { profileId } = useParams();
 
   useEffect(() => {
-    fetch(`/api/${profileId}/following`, {
+    console.log(profileId);
+    fetch(`/api/${profileId}/followers`, {
       method: "GET",
     })
     .then(res => res.json())
     .then(data => {
-      setFollowing(data.following);
+      setFollowers(data.followers);
       console.log(data);
+      console.log(followers);
     })
   }, []);
 
-  const showFollowing = () => {
-    console.log("show following");
-    <Link to={`${profileId}/following`} />
-  }
+  // useEffect(() => {
+  //   fetch(`/api/${profileId}/followers`, {
+  //     method: "GET",
+  //   })
+  //   .then(res => res.json())
+  //   .then(data => {
+  //     console.log(data);
+  //   })
+  // }, []);
+
 
   return (
     <Wrapper>
@@ -38,15 +45,15 @@ const FollowingPage = () => {
             </Follow>
           </FollowContainer> 
           <FollowContainer>
-            <Follow onClick={showFollowing}>
+            <Follow>
               Following
             </Follow>
           </FollowContainer>
         </Container>
-        {following && following.map((followingUser) => {
+        {followers && followers.map((followerUser) => {
         return (
           <div>
-            <FollowingUser followingUser={followingUser} />
+            <FollowerUser followerUser={followerUser} />
           </div>  
         )})
         } 
@@ -103,4 +110,4 @@ const Follow = styled.p`
   }
 `;
 
-export default FollowingPage;
+export default FollowerPage;
