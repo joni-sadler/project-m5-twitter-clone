@@ -3,16 +3,18 @@ import { useParams } from "react-router-dom";
 import { CurrentUserContext } from "./CurrentUserContext";
 import { COLORS } from "../constants";
 import { MapPin, Calendar } from "react-feather";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import HomeFeed from "./HomeFeed";
+import ActionButton from "./ActionButton";
 
 const Profile = () => {
   const {currentUser, setCurrentUser, status, setStatus} = useContext(CurrentUserContext);
   const [selectedUser, setSelectedUser] = useState();
   const { profileId } = useParams();
 
-  console.log("profile id:", profileId);
-
+  console.log(currentUser);
+  console.log(selectedUser);
 
   useEffect(() => {
     fetch(`/api/${profileId}/profile`, {
@@ -40,16 +42,26 @@ const Profile = () => {
           style={{
             borderRadius: "50%",
             border: "3px solid white",
-            position: "fixed",
+            position: "absolute",
             zIndex: "1",    
             top: "22%",
             left: "35%",   
             height: "140px",
             width: "140px",     
           }} />
-          <EditButton>
-            <EditText>Edit profile</EditText>
-          </EditButton>
+
+          {/* <ActionButton>
+            {selectedUser.profile.handle === currentUser.profile.handle &&
+            <ButtonText>Edit profile</ButtonText> }
+            {selectedUser.profile.handle !== currentUser.profile.handle && !selectedUser.profile.isBeingFollowedByYou &&
+            <ButtonText>Follow</ButtonText> }
+            {selectedUser.profile.handle !== currentUser.profile.handle && selectedUser.profile.isBeingFollowedByYou &&
+            <ButtonText>Unfollow</ButtonText> }
+          </ActionButton> */}
+
+          <ActionButton selectedUser={selectedUser} currentUser={currentUser}/>
+          
+
       </HeaderContainer>
       <InformationContainer>
         <DisplayName>{selectedUser.profile.displayName}</DisplayName>
@@ -66,8 +78,8 @@ const Profile = () => {
           </CalendarContainer>
         </LocationDateContainer>
         <FollowContainer>
-          <Follow>{selectedUser.profile.numFollowing} Following</Follow>
-          <Follow>{selectedUser.profile.numFollowers} Followers</Follow>
+          <NavigationLink to={`${selectedUser.profile.handle}/following`}>{selectedUser.profile.numFollowing} Following</NavigationLink>
+          <NavigationLink to={`${selectedUser.profile.handle}/followers`}>{selectedUser.profile.numFollowers} Followers</NavigationLink>
         </FollowContainer>
       </InformationContainer>
       <TweetsMediaLikesContainer>
@@ -100,22 +112,22 @@ const HeaderContainer = styled.div`
   height: auto;
 `;
 
-const EditButton = styled.div` 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 130px;
-  height: 40px;
-  border: 1px solid ${COLORS.primary};
-  border-radius: 20px;
-  margin: 10px 10px 0px 0px;
-`;
+// const ActionButton = styled.div` 
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   width: 130px;
+//   height: 40px;
+//   border: 1px solid ${COLORS.primary};
+//   border-radius: 20px;
+//   margin: 10px 10px 0px 0px;
+// `;
 
-const EditText = styled.p` 
-  font-size: 18px;
-  font-weight: 700;
-  color: ${COLORS.primary};
-`;
+// const ButtonText = styled.p` 
+//   font-size: 18px;
+//   font-weight: 700;
+//   color: ${COLORS.primary};
+// `;
 
 const InformationContainer = styled.div` 
   display: flex;
@@ -168,17 +180,18 @@ const JoinedDate = styled.p`
   color: gray;
 `;
 
+const NavigationLink = styled(NavLink)` 
+  font-size: 15px;
+  color: gray;
+  margin-top: 0px;
+  text-decoration: none;
+`;
+
 const FollowContainer = styled.div` 
   display: flex;
   justify-content: space-between;
   width: 200px;
   padding-left: 5px;
-`;
-
-const Follow = styled.p` 
-  font-size: 15px;
-  color: gray;
-  margin-top: 0px;
 `;
 
 const TweetsMediaLikesContainer = styled.div` 
