@@ -7,8 +7,8 @@ import { NavLink } from "react-router-dom";
 
 const SmallTweet = ({tweet}) => {
   return (
-    <NavigationLink to={`/tweet/${tweet.id}`}>
     <Wrapper>
+      <NavigationLink to={`/tweet/${tweet.id}`}>
       <TweetContainer>
       <img src={tweet.author.avatarSrc} style={{borderRadius: "50%"}} height="60px" width="60px" />
         <TweetDiv>
@@ -24,11 +24,12 @@ const SmallTweet = ({tweet}) => {
           {tweet.media.length > 0 && <img src={tweet.media[0].url} style={{borderRadius: "15px"}} height="auto" width="100%"  /> }
         </TweetDiv>
       </TweetContainer>        
+      </NavigationLink>
       <TweetActionWrapper>
           <TweetActions tweet={tweet}/>
       </TweetActionWrapper>
     </Wrapper>
-    </NavigationLink>
+
   )
 };
 
