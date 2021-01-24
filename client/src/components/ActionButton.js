@@ -1,13 +1,55 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { COLORS } from "../constants";
+import { useParams } from "react-router-dom";
+import { CurrentUserContext } from "./CurrentUserContext";
 
-const ActionButton = ({selectedUser, currentUser}) => {
+const ActionButton = ({selectedUser}) => {
+  const {currentUser} = useContext(CurrentUserContext);
+
+  const [isBeingFollowedByYou, setIsBeingFollowedByYou] = useState(selectedUser.profile.isBeingFollowedByYou);
+
+  const { profileId } = useParams();  
+  console.log(selectedUser);
+  console.log(currentUser);
+     
+
+  const triggerFollow = () => {
+    fetch(`/api/${profileId}/follow`, {
+      method: "PUT",
+    })
+    .then((res) => res.json())
+    .then((res) => {
+        console.log(res);
+        setIsBeingFollowedByYou(true);
+    })
+  }
+
+  const triggerUnfollow = () => {
+    fetch(`/api/${profileId}/unfollow`, {
+        method: "PUT",
+      })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        setIsBeingFollowedByYou(false);
+      })
+    }
+  
+
   return (
     <Wrapper>
-      {selectedUser.profile.handle === currentUser.profile.handle && <ButtonText>Edit profile</ButtonText> }
-      {selectedUser.profile.handle !== currentUser.profile.handle && !selectedUser.profile.isBeingFollowedByYou && <ButtonText>Follow</ButtonText> }
-      {selectedUser.profile.handle !== currentUser.profile.handle && selectedUser.profile.isBeingFollowedByYou && <ButtonText>Unfollow</ButtonText> }
+      {selectedUser.profile.handle === currentUser.profile.handle && 
+        <ButtonText>Edit profile</ButtonText> 
+      }
+
+      {selectedUser.profile.handle !== currentUser.profile.handle && !isBeingFollowedByYou && 
+        <ButtonText onClick={triggerFollow}>Follow</ButtonText> 
+      }
+
+      {selectedUser.profile.handle !== currentUser.profile.handle && isBeingFollowedByYou && 
+        <ButtonText onClick={triggerUnfollow}>Unfollow</ButtonText> 
+      }
     </Wrapper>
   )
 }
