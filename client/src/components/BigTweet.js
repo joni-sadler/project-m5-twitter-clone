@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 // import { CurrentUserContext } from "./CurrentUserContext";
 import TweetActions from "./TweetActions";
+import { format } from "date-fns";
 
 const BigTweet = ({selectedTweet}) => {
   // const {currentUser, status} = useContext(CurrentUserContext);
@@ -19,7 +20,14 @@ const BigTweet = ({selectedTweet}) => {
       )
   }
 
-  console.log(selectedTweet);
+  let formattedDate;
+
+  const tweetDate = () => {
+    formattedDate = format(new Date(selectedTweet.tweet.timestamp), 'p  •  MMM dd yyyy');
+    console.log(formattedDate);
+  }
+  
+  tweetDate();
 
   return (
     <Wrapper>
@@ -40,7 +48,7 @@ const BigTweet = ({selectedTweet}) => {
         </TweetHeader>
         <TweetContent>{selectedTweet.tweet.status}</TweetContent>
         {selectedTweet.tweet.media.length > 0 && <img src={selectedTweet.tweet.media[0].url} style={{borderRadius: "15px"}} height="auto" width="100%"  /> }
-        <TimeStamp>{selectedTweet.tweet.timestamp}</TimeStamp>
+        <TimeStamp>{formattedDate}</TimeStamp>
       </TweetDiv>
       <TweetActionWrapper>
         <TweetActions />
