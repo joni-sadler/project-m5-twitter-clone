@@ -1,23 +1,32 @@
 import React from "react";
 import TweetActions from "./TweetActions";
 import styled from "styled-components";
-import TweetDetails from "./TweetDetails";
-import BigTweet from "./BigTweet";
 import { NavLink } from "react-router-dom";
+import { format, compareAsc } from "date-fns";
 
 const SmallTweet = ({tweet}) => {
+
+  let formattedDate;
+
+  const tweetDate = () => {
+    formattedDate = format(new Date(tweet.timestamp), 'MMM dd');
+    console.log(formattedDate);
+  }
+  
+  tweetDate();
+
   return (
     <Wrapper>
       <TweetContainer>
       <img src={tweet.author.avatarSrc} style={{borderRadius: "50%"}} height="60px" width="60px" />
         <TweetDiv>
           <TweetHeader>
-            {tweet.isRetweeted === true && <Retweeted>Is retweeted</Retweeted>}
+            {/* {tweet.isRetweeted === true && <Retweeted>Is retweeted</Retweeted>} */}
             <DisplayName>
               <a href={`/${tweet.author.handle}`} style={{fontSize: "16px", textDecoration: "none", color: "black"}}>{tweet.author.displayName}</a>
             </DisplayName>
             <Handle>@{tweet.author.handle} •</Handle>
-            <Timestamp>{tweet.timestamp}</Timestamp>
+            <Timestamp>{formattedDate}</Timestamp>
           </TweetHeader>
           <NavigationLink to={`/tweet/${tweet.id}`}>
           <TweetContent>{tweet.status}</TweetContent>
