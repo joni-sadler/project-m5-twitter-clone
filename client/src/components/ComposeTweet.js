@@ -1,5 +1,6 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { CurrentUserContext } from "./CurrentUserContext";
+import { TweetContext } from "./TweetContext";
 import { COLORS } from "../constants";
 import styled from "styled-components";
 import SpinnerComponent from "./SpinnerComponent";
@@ -8,6 +9,7 @@ import { u1F4A3 as bomb } from 'react-icons-kit/noto_emoji_regular/u1F4A3';
 
 const ComposeTweet = () => {
   const {currentUser} = useContext(CurrentUserContext);
+  const {refreshFeed} = useContext(TweetContext);
   const [count, setCount] = useState(0);
   const [error, setError] = useState(null);
 
@@ -20,26 +22,23 @@ const ComposeTweet = () => {
   const recordTweet = () => {
     let tweetContents = document.querySelector("#tweetContent").value;
 
-    console.log(tweetContents);
-    fetch('/api/tweet', {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({"status": tweetContents})
-    })
-    .then((res) => res.json())
-    .then((res) => {
-      if (remainingCharacters >= 0) {
+    if (remainingCharacters >= 0) {
+      fetch('/api/tweet', {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({"status": tweetContents})
+      })
+      .then((res) => res.json())
+      .then((res) => {
         console.log(res)  
-      }
-      else {
-        console.log("Your tweet is too long.")
-      }
-    })
-    .catch(err => {
-      console.log("There was an error composing your tweet.");
-      setError(err);
-    })
-  }
+        refreshFeed();
+      })
+      .catch(err => {
+        console.log("There was an error composing your tweet.");
+        setError(err);
+      })
+     }
+    }
 
   let remainingCharacters = 280 - count;
 
@@ -59,6 +58,7 @@ const ComposeTweet = () => {
       <TextInput>
         <textarea 
           type="text"
+          placeholder="What's happening?"
           style={{
             width: "500px",
             height: "200px",

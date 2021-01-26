@@ -12,7 +12,7 @@ export const TweetProvider = ({children}) => {
 
   console.log(tweets)
 
-  useEffect(() => {
+  const refreshFeed = () => {
     fetch('/api/me/home-feed', {
       method: "GET",
     })
@@ -27,33 +27,15 @@ export const TweetProvider = ({children}) => {
     .finally(() => {
       setLoading(false);
     })
+  }
+
+  useEffect(() => {
+    refreshFeed();
   }, []);
-
-  // useEffect(() => {
-  //   if (tweets) {
-  //       setLoading(false);
-  //   }
-  // }, [tweets]);
-  
-  // if (loading) {
-  //     return (
-  //         <SpinnerComponent />
-  //     )
-  // }
-
-  // if (error) {
-  //   return (
-  //     <div>
-  //       <Icon size={60} icon={bomb} />
-  //       <h2>An unknown error has occured.</h2>
-  //       <h4>Please try refreshing the page.</h4>
-  //     </div>
-  //   )
-  // }
 
 
   return (
-    <TweetContext.Provider value={{ tweets, setTweets, loading, setLoading, error }}>
+    <TweetContext.Provider value={{ tweets, setTweets, loading, setLoading, error, refreshFeed }}>
         {children}
     </TweetContext.Provider>
   );    
