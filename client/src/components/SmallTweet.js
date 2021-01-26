@@ -2,7 +2,8 @@ import React from "react";
 import TweetActions from "./TweetActions";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
-import { format, compareAsc } from "date-fns";
+import { format } from "date-fns";
+import { useHistory } from "react-router-dom";
 
 const SmallTweet = ({tweet}) => {
 
@@ -10,33 +11,60 @@ const SmallTweet = ({tweet}) => {
 
   const tweetDate = () => {
     formattedDate = format(new Date(tweet.timestamp), 'MMM dd');
-    console.log(formattedDate);
   }
   
   tweetDate();
 
+  let history = useHistory();
+
+  const handleClick = () => {
+    history.push("/");
+  }
+
+  const handleKeyPressToBigTweet = (event) => {
+    if (event.key === 'Enter') {
+      return (
+        <NavigationLink to={`/tweet/${tweet.id}`} />
+      )
+    }
+  }
+
+
   return (
     <Wrapper>
+     <NavigationLink 
+       to={`/tweet/${tweet.id}`} 
+       tabIndex="0" 
+       onClick={handleClick} 
+       aria-label="View tweet"
+       onKeyDown={handleKeyPressToBigTweet}
+      >
       <TweetContainer>
       <img src={tweet.author.avatarSrc} style={{borderRadius: "50%"}} height="60px" width="60px" />
         <TweetDiv>
           <TweetHeader>
-            {/* {tweet.isRetweeted === true && <Retweeted>Is retweeted</Retweeted>} */}
             <DisplayName>
-              <a href={`/${tweet.author.handle}`} style={{fontSize: "16px", textDecoration: "none", color: "black"}}>{tweet.author.displayName}</a>
+              <NavigationLink 
+                to={`/${tweet.author.handle}`} 
+                tabIndex="0" 
+                style={{fontSize: "16px", textDecoration: "none", color: "black"}}
+                >
+                {tweet.author.displayName}
+              </NavigationLink>
             </DisplayName>
             <Handle>@{tweet.author.handle} •</Handle>
             <Timestamp>{formattedDate}</Timestamp>
           </TweetHeader>
-          <NavigationLink to={`/tweet/${tweet.id}`}>
+          {/* <NavigationLink to={`/tweet/${tweet.id}`}> */}
           <TweetContent>{tweet.status}</TweetContent>
           {tweet.media.length > 0 && <img src={tweet.media[0].url} style={{borderRadius: "15px"}} height="auto" width="100%"  /> }
-          </NavigationLink>
+          {/* </NavigationLink> */}
         </TweetDiv>
       </TweetContainer>        
       <TweetActionWrapper>
           <TweetActions tweet={tweet}/>
       </TweetActionWrapper>
+      </NavigationLink>
     </Wrapper>
 
   )
@@ -45,6 +73,9 @@ const SmallTweet = ({tweet}) => {
 const NavigationLink = styled(NavLink)` 
   text-decoration: none;
   color: black;
+  /* &:active {
+    border: 1px solid blue; */
+  }
 `;
 
 const Wrapper = styled.div` 
@@ -74,11 +105,11 @@ const TweetHeader = styled.div`
   flex-direction: row;
 `;
 
-const Retweeted = styled.p` 
-  font-size: 14px;
-  color: gray;
-  padding: 4px 0px 0px 5px;
-`;
+// const Retweeted = styled.p` 
+//   font-size: 14px;
+//   color: gray;
+//   padding: 4px 0px 0px 5px;
+// `;
 
 const DisplayName = styled.p` 
   font-size: 16px;
@@ -102,9 +133,9 @@ const TweetContent = styled.p`
   margin-top: 0px;
 `;
 
-{/* const TweetMedia = styled.div` 
+const TweetMedia = styled.div` 
   display: flex;
-`; */}
+`;
 
 const TweetActionWrapper = styled.div` 
   justify-content: space-evenly;

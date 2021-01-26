@@ -1,74 +1,73 @@
 import React, { useState } from "react";
-import styled, { keyframes } from "styled-components";
+import { useParams } from "react-router-dom";
+import styled from "styled-components";
 import { MessageCircle, Repeat, Heart, Upload } from "react-feather";
 
 const TweetActions = ({tweet}) => {
-  const [isHovered, setIsHovered] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [isRetweeted, setIsRetweeted] = useState(false);
+  
+  const {tweetId} = useParams();
 
-  const likeAction = () => {
-    if (!isLiked) {
-      setIsLiked(true);
-      console.log("tweet is liked");
-    } else {
-      setIsLiked(false)
-      console.log("tweet is unliked");
-    }
+  const toggleLike = () => {
+    fetch(`/api/tweet/${tweetId}/like`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ like: !isLiked})
+    })
+    .then((res) => res.json())
+    .then((res) => {
+      console.log(res)
+      if (!isLiked) {
+        setIsLiked(true);
+        console.log("tweet is liked");
+      } else {
+        setIsLiked(false)
+        console.log("tweet is unliked");
+      }
+    })
   }
 
-  const retweetAction = () => {
-    if (!isRetweeted) {
-      setIsRetweeted(true);
-      console.log("tweet is retweeted");
-    } else {
-      setIsRetweeted(false);
-      console.log("retweet has been undone");
-    }
-
+  const toggleRetweet = () => {
+    fetch(`/api/tweet/${tweetId}/retweet`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ retweet: !isRetweeted})
+    })
+    .then((res) => res.json())
+    .then((res) => {
+      console.log(res)
+      if (!isRetweeted) {
+        setIsRetweeted(true);
+        console.log("tweet is retweeted");
+      } else {
+        setIsRetweeted(false)
+        console.log("tweet is not retweeted");
+      }
+    })
   }
 
-//   const scale = keyframes`
-//   0% {
-//     transform: scale(0);
-//   }
-//   100% {
-//       transform: scale(1);
-//   }
-// `;
-
-// const fade = keyframes`
-//   0% {
-//       opacity: 0%;
-//   }
-//   50% {
-//       opacity: 50%;
-//   }
-//   100% {
-//       opacity: 100%;
-//   }
-// `;
 
   return (
     <Wrapper>
 
       <ItemContainer>
-        <MessageCircle height="20px" color="gray" />
+        <MessageCircle height="20px" color="gray" tabIndex="0" aria-label="Reply to tweet" />
       </ItemContainer>
 
-      <ItemContainer onClick={retweetAction}>
-        <Repeat height="20px" color="gray" />
+      <ItemContainer onClick={toggleRetweet}>
+        <Repeat height="20px" color="gray" tabIndex="0" aria-label="Retweet" />
         {isRetweeted && <Counter>1</Counter>}
       </ItemContainer>
 
 
-        <ItemContainer onClick={likeAction}>
-          <Heart height="20px" color="gray" />
+        <ItemContainer onClick={toggleLike}>
+          <Heart height="20px" color="gray" tabIndex="0" aria-label="Like tweet" />
           {isLiked && <Counter>1</Counter>}
         </ItemContainer>
 
         <ItemContainer>
-        <Upload height="20px" color="gray" />
+        <Upload height="20px" color="gray" tabIndex="0" aria-label="Save tweet" />
         </ItemContainer>
 
     </Wrapper>
@@ -96,12 +95,5 @@ const Counter = styled.p`
   margin: 0px;
 `;
 
-
-// const Circle = styled.div` 
-//     animation: ${scale} 300ms forwards, ${fade} 500ms ease-out forwards;
-//     z-index: 0;
-//     position: absolute;
-//     border-radius: 50%;
-// `;
 
 export default TweetActions;
