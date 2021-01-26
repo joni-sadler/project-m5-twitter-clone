@@ -43,6 +43,7 @@ const SmallTweet = ({tweet}) => {
       <img src={tweet.author.avatarSrc} style={{borderRadius: "50%"}} height="60px" width="60px" />
         <TweetDiv>
           <TweetHeader>
+          {tweet.isRetweeted === true && <Retweeted>Is retweeted</Retweeted>}  
             <DisplayName>
               <NavigationLink 
                 to={`/${tweet.author.handle}`} 
@@ -73,18 +74,16 @@ const SmallTweet = ({tweet}) => {
 const NavigationLink = styled(NavLink)` 
   text-decoration: none;
   color: black;
-  /* &:active {
-    border: 1px solid blue; */
-  }
 `;
 
 const Wrapper = styled.div` 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-top: 40px;
-  border-bottom: 1px solid lightgray;
-  padding: 10px;
+  border-top: 1px solid lightgray;
+  border-left: 1px solid lightgray;
+  border-right: 1px solid lightgray;
+  padding: 10px 30px 10px 10px;
 `;
 
 const TweetContainer = styled.div` 
@@ -105,11 +104,11 @@ const TweetHeader = styled.div`
   flex-direction: row;
 `;
 
-// const Retweeted = styled.p` 
-//   font-size: 14px;
-//   color: gray;
-//   padding: 4px 0px 0px 5px;
-// `;
+const Retweeted = styled.p` 
+  font-size: 14px;
+  color: gray;
+  padding: 4px 0px 0px 5px;
+`;
 
 const DisplayName = styled.p` 
   font-size: 16px;
