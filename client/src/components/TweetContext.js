@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from "react";
-import SpinnerComponent from "./SpinnerComponent";
-import {Icon} from "react-icons-kit";
-import { u1F4A3 as bomb } from 'react-icons-kit/noto_emoji_regular/u1F4A3';
 
 export const TweetContext = React.createContext(null);
 
@@ -33,7 +30,7 @@ export const TweetProvider = ({children}) => {
     refreshFeed();
   }, []);
 
-
+  
   return (
     <TweetContext.Provider value={{ tweets, setTweets, loading, setLoading, error, refreshFeed }}>
         {children}

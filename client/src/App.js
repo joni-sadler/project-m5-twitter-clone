@@ -26,12 +26,12 @@ const App = () => {
 
   if (error) {
     return (
-          <div>
-            <Icon size={60} icon={bomb} />
-            <h2>An unknown error loading user context has occured.</h2>
-            <h4>Please try refreshing the page.</h4>
-          </div>
-        )
+      <div>
+        <Icon size={60} icon={bomb} />
+        <h2>An unknown error loading user context has occured.</h2>
+        <h4>Please try refreshing the page.</h4>
+        </div>
+    )
   }
 
   return (
@@ -52,7 +52,6 @@ const App = () => {
               <Bookmarks />
             </Route>
           
-            {/* view single tweet */}
             <Route exact path="/tweet/:tweetId">
               <TweetDetails />
             </Route>
@@ -73,14 +72,12 @@ const App = () => {
               <ActionButton />
             </Route>
 
-            {/* view user profile page */}
             <Route exact path="/:profileId">
               <Profile />
             </Route>
 
-            
             <Route>
-              Missing route! Do you need to add a route in BrowserRouter in App.js?
+              Missing route!
             </Route>
 
           </Switch>

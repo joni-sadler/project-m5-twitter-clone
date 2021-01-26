@@ -9,10 +9,14 @@ import HomeFeed from "./HomeFeed";
 import ActionButton from "./ActionButton";
 import ComposeTweet from "./ComposeTweet";
 import SpinnerComponent from "./SpinnerComponent";
+import {Icon} from "react-icons-kit";
+import { u1F4A3 as bomb } from 'react-icons-kit/noto_emoji_regular/u1F4A3';
 
 const Profile = () => {
-  const {currentUser, status, setStatus} = useContext(CurrentUserContext);
+  const {currentUser} = useContext(CurrentUserContext);
   const [selectedUser, setSelectedUser] = useState();
+  const [status, setStatus] = useState("loading");
+  const [error, setError] = useState(null);
   const { profileId } = useParams();
 
   useEffect(() => {
@@ -21,14 +25,33 @@ const Profile = () => {
     })
     .then(res => res.json())
     .then(data => {
-      setSelectedUser(data);
+      console.log(data);
+      if (data.error) {
+        setError(data.error);
+      } else {
+        setSelectedUser(data);
+      }
+    })
+    .catch(err => {
+      console.log("Profile: An error has occurred.");
+      setError(err);
+    })
+    .finally(() => {
       setStatus('idle');
     })
   }, []);
 
-  if (!selectedUser) {
+  if (status === "loading") {
+    return <SpinnerComponent />
+  }
+
+  if (error) {
     return (
-      <SpinnerComponent />
+      <div>
+        <Icon size={60} icon={bomb} />
+        <h2>An unknown error loading profile data has occured.</h2>
+        <h4>Please try refreshing the page.</h4>
+      </div>
     )
   }
 
@@ -99,23 +122,6 @@ const HeaderContainer = styled.div`
   width: 650px;
   height: auto;
 `;
-
-// const ActionButton = styled.div` 
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   width: 130px;
-//   height: 40px;
-//   border: 1px solid ${COLORS.primary};
-//   border-radius: 20px;
-//   margin: 10px 10px 0px 0px;
-// `;
-
-// const ButtonText = styled.p` 
-//   font-size: 18px;
-//   font-weight: 700;
-//   color: ${COLORS.primary};
-// `;
 
 const InformationContainer = styled.div` 
   display: flex;

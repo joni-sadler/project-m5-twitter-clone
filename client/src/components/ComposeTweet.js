@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useState} from "react";
 import { CurrentUserContext } from "./CurrentUserContext";
 import { TweetContext } from "./TweetContext";
 import { COLORS } from "../constants";

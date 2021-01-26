@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { ReactComponent as Logo } from "../assets/logo.svg";
 import { NavLink } from "react-router-dom";
 import { COLORS } from "../constants";
 import { Home, User, Bell, Bookmark } from "react-feather";
 import styled from "styled-components";
 import GlobalStyles from "../GlobalStyles";
+import { CurrentUserContext } from "./CurrentUserContext";
 
 const Sidebar = () => {
+  const { currentUser } = useContext(CurrentUserContext);
+
   return (
     <Wrapper>
       <GlobalStyles />
@@ -19,7 +22,7 @@ const Sidebar = () => {
 
         <SidebarContainer>
           <User style={{marginRight: "30px"}}/>
-            <NavigationLink to="/:profileId">Profile</NavigationLink>
+            <NavigationLink to={`/${currentUser.profile.handle}`}>Profile</NavigationLink>
         </SidebarContainer>
 
         <SidebarContainer>

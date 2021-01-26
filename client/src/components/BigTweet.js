@@ -9,14 +9,14 @@ const BigTweet = ({selectedTweet}) => {
 
   useEffect(() => {
     if (selectedTweet) {
-        setLoading(false);
+      setLoading(false);
     }
   }, [selectedTweet]);
   
   if (loading) {
-      return (
-          <SpinnerComponent />
-      )
+    return (
+      <SpinnerComponent />
+    )
   }
 
   let formattedDate;
@@ -32,6 +32,7 @@ const BigTweet = ({selectedTweet}) => {
     <Wrapper>
       <TweetDiv>
         <TweetHeader>
+        {selectedTweet.isRetweeted === true && <Retweeted>Is retweeted</Retweeted>}  
         <img src={selectedTweet.tweet.author.avatarSrc} style={{borderRadius: "50%"}} height="60px" width="60px" />
           <NameDiv>
           <a href={`/${selectedTweet.tweet.author.handle}`} 
@@ -66,7 +67,6 @@ const Wrapper = styled.div`
    border: 1px solid lightgray;
 `;
 
-
 const TweetDiv = styled.div` 
   display: flex;
   flex-direction: column;
@@ -90,6 +90,12 @@ const DisplayName = styled.p`
   font-size: 16px;
   font-weight: 600;
   margin: 0px;
+`;
+
+const Retweeted = styled.p` 
+  font-size: 14px;
+  color: gray;
+  padding: 4px 0px 0px 5px;
 `;
 
 const Handle = styled.p` 
