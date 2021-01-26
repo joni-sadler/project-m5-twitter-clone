@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import SpinnerComponent from "./SpinnerComponent";
 
 export const TweetContext = React.createContext(null);
 
@@ -27,7 +28,7 @@ export const TweetProvider = ({children}) => {
   
   if (loading) {
       return (
-          <div>Loading</div>
+          <SpinnerComponent />
       )
   }
 

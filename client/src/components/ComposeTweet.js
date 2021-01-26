@@ -2,21 +2,35 @@ import React, {useContext, useState} from "react";
 import { CurrentUserContext } from "./CurrentUserContext";
 import { COLORS } from "../constants";
 import styled from "styled-components";
+import SpinnerComponent from "./SpinnerComponent";
 
 const ComposeTweet = () => {
   const {currentUser} = useContext(CurrentUserContext);
-  const [tweetBody, setTweetBody] = useState();
   const [count, setCount] = useState(0);
 
+  if (!currentUser) {
+    return (
+      <SpinnerComponent />
+    )
+  }
+
   const recordTweet = () => {
+    let tweetContents = document.querySelector("#tweetContent").value;
+
+    console.log(tweetContents);
     fetch('/api/tweet', {
       method: "POST",
-      headers: {"Accept": "application/json"},
-      body: JSON.stringify({"status": tweetBody})
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({"status": tweetContents})
     })
     .then((res) => res.json())
     .then((res) => {
-      console.log(res)  
+      if (remainingCharacters >= 0) {
+        console.log(res)  
+      }
+      else {
+        console.log("Your tweet is too long.")
+      }
     })
   }
 
@@ -24,7 +38,7 @@ const ComposeTweet = () => {
 
   return (
     <Wrapper>
-      <img src={currentUser.profile.avatarSrc} style={{borderRadius: "50%"}} height="60px" width="60px" />
+      <img src={currentUser.profile.avatarSrc} style={{borderRadius: "50%"}} height="60px" width="60px" alt="avatar" />
       <TextInput>
         <textarea 
           type="text"
@@ -33,7 +47,7 @@ const ComposeTweet = () => {
             height: "200px",
             border: "none",
         }} 
-        onChange={event => setTweetBody(event.target.value)}
+        id="tweetContent"
         onChange={event => setCount(event.target.value.length)}></textarea>
       </TextInput>
       <FooterDiv>

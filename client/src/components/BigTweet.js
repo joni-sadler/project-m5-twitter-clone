@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-// import { CurrentUserContext } from "./CurrentUserContext";
 import TweetActions from "./TweetActions";
 import { format } from "date-fns";
+import SpinnerComponent from "./SpinnerComponent";
 
 const BigTweet = ({selectedTweet}) => {
-  // const {currentUser, status} = useContext(CurrentUserContext);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -16,7 +15,7 @@ const BigTweet = ({selectedTweet}) => {
   
   if (loading) {
       return (
-          <div>Loading</div>
+          <SpinnerComponent />
       )
   }
 

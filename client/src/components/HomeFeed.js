@@ -1,54 +1,27 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useContext } from "react";
 import SmallTweet from "./SmallTweet";
 import styled from "styled-components";
 import { TweetContext } from "./TweetContext";
+import SpinnerComponent from "./SpinnerComponent";
+import { CurrentUserContext } from "./CurrentUserContext";
+import ComposeTweet from "./ComposeTweet";
 
-const HomeFeed = () => {
+const HomeFeed = ({selectedUser}) => {
+  const { tweets } = useContext(TweetContext);
+  const { currentUser } = useContext(CurrentUserContext);
 
-  const { tweets, setTweets, loading, setLoading } = useContext(TweetContext);
-
-//   useEffect(() => {
-//     if (!tweets) {
-//         fetch('/api/me/home-feed', {
-//             method: "GET",
-//           })
-//           .then(res => res.json())
-//           .then(data => {
-//             setTweets(data)
-//           })
-//     }
-//   }, []);
-
-//   useEffect(() => {
-//     if (tweets) {
-//         setLoading(false);
-//     }
-//   }, [tweets])
-
-//   let {handle} = useParams();
-
-//   useEffect(() => {
-//     fetch(`/api/${handle}/feed`, {
-//       method: "GET",
-//     })
-//     .then(res => res.json())
-//     .then(data => {
-//      console.log("Feed tweets")
-//      console.log(data)
-//     })
-//   }, []);
-
-//   console.log(tweets)
+  if (!tweets) {
+    return (
+      <SpinnerComponent />
+    )
+  }
   
-//   if (loading) {
-//       return (
-//           <div>Loading</div>
-//       )
-//   }
+  console.log(selectedUser);
+  console.log(currentUser);
 
   return (
-  <Wrapper>    
+  <Wrapper>   
+    <ComposeTweet />
     {tweets.tweetIds.map((tweetId) => {
       const tweet = tweets.tweetsById[tweetId]
         return (

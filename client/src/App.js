@@ -9,14 +9,17 @@ import styled from "styled-components";
 import Sidebar from "./components/Sidebar";
 import { CurrentUserContext, CurrentUserProvider } from "./components/CurrentUserContext";
 import { TweetProvider } from "./components/TweetContext";
-import Following from "./components/Following";
+import FollowingPage from "./components/FollowingPage";
+import FollowerPage from "./components/FollowerPage";
+import ActionButton from "./components/ActionButton";
+import SpinnerComponent from "./components/SpinnerComponent";
 
 
 const App = () => {
   const {currentUser, status} = useContext(CurrentUserContext);
   return (
     <TweetProvider> 
-      {(status === "loading") ? "The page is loading" :
+      {(status === "loading") ? <SpinnerComponent /> :
       <BrowserRouter>
         <Wrapper>
           <Sidebar />
@@ -40,7 +43,19 @@ const App = () => {
             </Route>
 
             <Route exact path="/:profileId/following">
-              <Following />
+              <FollowingPage />
+            </Route>
+
+            <Route exact path="/:profileId/followers">
+              <FollowerPage />
+            </Route>
+
+            <Route exact path="/:profileId/follow">
+              <ActionButton />
+            </Route>
+
+            <Route exact path="/:profileId/unfollow">
+              <ActionButton />
             </Route>
 
             {/* view user profile page */}

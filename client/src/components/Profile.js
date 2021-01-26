@@ -7,14 +7,13 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import HomeFeed from "./HomeFeed";
 import ActionButton from "./ActionButton";
+import ComposeTweet from "./ComposeTweet";
+import SpinnerComponent from "./SpinnerComponent";
 
 const Profile = () => {
-  const {currentUser, setCurrentUser, status, setStatus} = useContext(CurrentUserContext);
+  const {currentUser, status, setStatus} = useContext(CurrentUserContext);
   const [selectedUser, setSelectedUser] = useState();
   const { profileId } = useParams();
-
-  console.log(currentUser);
-  console.log(selectedUser);
 
   useEffect(() => {
     fetch(`/api/${profileId}/profile`, {
@@ -23,14 +22,13 @@ const Profile = () => {
     .then(res => res.json())
     .then(data => {
       setSelectedUser(data);
-      console.log(data);
       setStatus('idle');
     })
   }, []);
 
   if (!selectedUser) {
     return (
-      <p>Loading</p>
+      <SpinnerComponent />
     )
   }
 
@@ -50,18 +48,7 @@ const Profile = () => {
             width: "140px",     
           }} />
 
-          {/* <ActionButton>
-            {selectedUser.profile.handle === currentUser.profile.handle &&
-            <ButtonText>Edit profile</ButtonText> }
-            {selectedUser.profile.handle !== currentUser.profile.handle && !selectedUser.profile.isBeingFollowedByYou &&
-            <ButtonText>Follow</ButtonText> }
-            {selectedUser.profile.handle !== currentUser.profile.handle && selectedUser.profile.isBeingFollowedByYou &&
-            <ButtonText>Unfollow</ButtonText> }
-          </ActionButton> */}
-
-          <ActionButton selectedUser={selectedUser} currentUser={currentUser}/>
-          
-
+        <ActionButton selectedUser={selectedUser} />
       </HeaderContainer>
       <InformationContainer>
         <DisplayName>{selectedUser.profile.displayName}</DisplayName>
@@ -93,7 +80,8 @@ const Profile = () => {
             <MenuItem>Likes</MenuItem>
           </TweetsMediaLikes>
         </TweetsMediaLikesContainer>
-          <HomeFeed />
+        {currentUser === selectedUser && <ComposeTweet />}
+          <HomeFeed selected={selectedUser} />
     </Wrapper>
   )
 };
