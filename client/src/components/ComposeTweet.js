@@ -3,10 +3,13 @@ import { CurrentUserContext } from "./CurrentUserContext";
 import { COLORS } from "../constants";
 import styled from "styled-components";
 import SpinnerComponent from "./SpinnerComponent";
+import {Icon} from "react-icons-kit";
+import { u1F4A3 as bomb } from 'react-icons-kit/noto_emoji_regular/u1F4A3';
 
 const ComposeTweet = () => {
   const {currentUser} = useContext(CurrentUserContext);
   const [count, setCount] = useState(0);
+  const [error, setError] = useState(null);
 
   if (!currentUser) {
     return (
@@ -32,9 +35,23 @@ const ComposeTweet = () => {
         console.log("Your tweet is too long.")
       }
     })
+    .catch(err => {
+      console.log("There was an error composing your tweet.");
+      setError(err);
+    })
   }
 
   let remainingCharacters = 280 - count;
+
+  if (error) {
+    return (
+      <div>
+        <Icon size={60} icon={bomb} />
+        <h2>Your attempt to post a tweet has failed.</h2>
+        <h4>Please try refreshing the page.</h4>
+      </div>
+    )
+  }
 
   return (
     <Wrapper>
