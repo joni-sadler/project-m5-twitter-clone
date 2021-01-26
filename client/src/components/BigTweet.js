@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import TweetActions from "./TweetActions";
 import { format } from "date-fns";
+import { NavLink } from "react-router-dom";
 import SpinnerComponent from "./SpinnerComponent";
 
 const BigTweet = ({selectedTweet}) => {
@@ -35,14 +36,9 @@ const BigTweet = ({selectedTweet}) => {
         {selectedTweet.isRetweeted === true && <Retweeted>Is retweeted</Retweeted>}  
         <img src={selectedTweet.tweet.author.avatarSrc} style={{borderRadius: "50%"}} height="60px" width="60px" />
           <NameDiv>
-          <a href={`/${selectedTweet.tweet.author.handle}`} 
-          style={{
-            fontSize: "18px", 
-            textDecoration: "none", 
-            color: "black", 
-            fontWeight: "600"}}>
+          <NavigationLink to={`/${selectedTweet.tweet.author.handle}`} >
             {selectedTweet.tweet.author.displayName}
-          </a>
+          </NavigationLink>
             <Handle>@{selectedTweet.tweet.author.handle}</Handle>
           </NameDiv>
         </TweetHeader>
@@ -86,10 +82,11 @@ const NameDiv = styled.div`
   padding: 15px;
 `;
 
-const DisplayName = styled.p` 
-  font-size: 16px;
-  font-weight: 600;
-  margin: 0px;
+const NavigationLink = styled(NavLink)` 
+  font-size: "18px"; 
+  text-decoration: "none";
+  color: "black";
+  font-weight: "600";
 `;
 
 const Retweeted = styled.p` 
