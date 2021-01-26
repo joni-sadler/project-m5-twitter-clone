@@ -13,18 +13,33 @@ import FollowingPage from "./components/FollowingPage";
 import FollowerPage from "./components/FollowerPage";
 import ActionButton from "./components/ActionButton";
 import SpinnerComponent from "./components/SpinnerComponent";
+import {Icon} from "react-icons-kit";
+import { u1F4A3 as bomb } from 'react-icons-kit/noto_emoji_regular/u1F4A3';
 
 
 const App = () => {
-  const {currentUser, status} = useContext(CurrentUserContext);
+  const {currentUser, status, error} = useContext(CurrentUserContext);
+
+  if (status === "loading") {
+    return <SpinnerComponent />
+  }
+
+  if (error) {
+    return (
+          <div>
+            <Icon size={60} icon={bomb} />
+            <h2>An unknown error loading user context has occured.</h2>
+            <h4>Please try refreshing the page.</h4>
+          </div>
+        )
+  }
+
   return (
     <TweetProvider> 
-      {(status === "loading") ? <SpinnerComponent /> :
       <BrowserRouter>
         <Wrapper>
           <Sidebar />
           <Switch>
-
             <Route exact path="/">
               <HomeFeed />
             </Route>
@@ -71,7 +86,7 @@ const App = () => {
           </Switch>
         </Wrapper>
       </BrowserRouter> 
-    }
+    
     </TweetProvider>
   )
 }
