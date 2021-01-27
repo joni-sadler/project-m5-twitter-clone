@@ -6,7 +6,7 @@ const Bomb = () => {
   return (
     <div>
       <Icon size={60} icon={bomb} />
-      <h2>An unknown error loading user context has occured.</h2>
+      <h2>An unknown error has occured.</h2>
       <h4>Please try refreshing the page.</h4>
     </div>
   )

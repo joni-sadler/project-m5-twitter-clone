@@ -42,7 +42,12 @@ const ComposeTweet = () => {
   let remainingCharacters = 280 - count;
 
   if (error) {
-    return <Bomb />
+    return (
+    <div>
+      <Bomb />
+      <h4>Your tweet was not successful. Please try again!</h4>
+    </div>  
+    )
   }
 
   return (
