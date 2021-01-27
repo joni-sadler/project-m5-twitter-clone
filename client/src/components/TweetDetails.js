@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import BigTweet from "./BigTweet";
 import { useParams } from "react-router-dom";
-import {Icon} from "react-icons-kit";
-import { u1F4A3 as bomb } from 'react-icons-kit/noto_emoji_regular/u1F4A3';
+import Bomb from "./Bomb";
 
 const TweetDetails = () => {
     const [selectedTweet, setSelectedTweet] = useState();
@@ -25,13 +24,7 @@ const TweetDetails = () => {
       }, []);
 
       if (error) {
-        return (
-          <div>
-            <Icon size={60} icon={bomb} />
-            <h2>An unknown error loading this tweet has occured.</h2>
-            <h4>Please try refreshing the page.</h4>
-          </div>
-        )
+        return <Bomb />
       }
 
   return (

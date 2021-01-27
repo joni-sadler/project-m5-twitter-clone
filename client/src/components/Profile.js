@@ -9,8 +9,7 @@ import HomeFeed from "./HomeFeed";
 import ActionButton from "./ActionButton";
 import ComposeTweet from "./ComposeTweet";
 import SpinnerComponent from "./SpinnerComponent";
-import {Icon} from "react-icons-kit";
-import { u1F4A3 as bomb } from 'react-icons-kit/noto_emoji_regular/u1F4A3';
+import Bomb from "./Bomb";
 
 const Profile = () => {
   const {currentUser} = useContext(CurrentUserContext);
@@ -46,13 +45,7 @@ const Profile = () => {
   }
 
   if (error) {
-    return (
-      <div>
-        <Icon size={60} icon={bomb} />
-        <h2>An unknown error loading profile data has occured.</h2>
-        <h4>Please try refreshing the page.</h4>
-      </div>
-    )
+    return <Bomb />
   }
 
   return (

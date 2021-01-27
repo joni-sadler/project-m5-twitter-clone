@@ -3,21 +3,16 @@ import SmallTweet from "./SmallTweet";
 import styled from "styled-components";
 import { TweetContext } from "./TweetContext";
 import SpinnerComponent from "./SpinnerComponent";
-import { CurrentUserContext } from "./CurrentUserContext";
 import ComposeTweet from "./ComposeTweet";
 
-const HomeFeed = ({selectedUser}) => {
+const HomeFeed = () => {
   const { tweets } = useContext(TweetContext);
-  const { currentUser } = useContext(CurrentUserContext);
 
   if (!tweets) {
     return (
       <SpinnerComponent />
     )
   }
-  
-  console.log(selectedUser);
-  console.log(currentUser);
 
   return (
   <Wrapper>   
